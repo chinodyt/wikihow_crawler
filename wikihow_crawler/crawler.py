@@ -27,21 +27,19 @@ class Crawler :
         else :
             self.url = Crawler.url_lang['en']
     
-    def search(self, query, already = set(), n = 10) :
+    def search(self, query, resultset = [], n = 10) :
         query = query.replace(' ', '+')
-        how_tos = []
         page = 0
         while n > 0 :
             rs = self.__request_query(query, page)
             for r in rs :
-                if r not in already :
-                    how_tos.append(HowToPage(r))
-                    already.add(r)
+                if r not in resultset :
+                    resultset.append(HowToPage(r))
                     n -= 1
                     if n <= 0 :
                         break
             page += 1
-        return how_tos, already
+        return resultset
 
     def __request_query(self, query, page = 0) :
         url_query = self.url+query+f"&start={15*(page)}"
@@ -134,8 +132,13 @@ class HowToPage :
             self.steps.append(s)
             #self.steps.append(step)
             
-
-
+    def __eq__(self, other) :
+        if isinstance(other, str) :
+            return self.url == other
+        elif isinstance(other, HowToPage) :
+            return self.url == other.url
+        else :
+            return False
     
 
 
