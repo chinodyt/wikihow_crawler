@@ -1,0 +1,9 @@
+{
+    "output_path" : "/use/local_settings.json/to/specify/path",
+    "n_query" : 50,
+    "query" : {
+        "pt" : [""],
+        "en" : [""],
+        "es" : [""]
+    }
+}
