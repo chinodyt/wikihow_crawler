@@ -58,10 +58,18 @@ class HowToPage :
         self.url = url
         self.__parse()
         
-    def save_pdf(self, path) :
-        name = self.url[self.url.rfind('/'):]
-        print(name)
-        #pdfkit.from_url(self.url, output)
+    def save_pdf(self, path = './') :
+        name = self.url[self.url.rfind('/')+1:].replace(' ', '') + '.pdf'
+        lang = 'en'
+        if 'pt.' in self.url :
+            lang = 'pt'
+        elif 'es.' in self.url :
+            lang = 'es'
+        name = f"{lang}-{name}"
+
+        self.filename = name
+        full_path = os.path.join(path, name)
+        pdfkit.from_url(self.url, full_path)
 
     def __parse(self) :
         res = requests.get(self.url)
