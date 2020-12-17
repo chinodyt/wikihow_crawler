@@ -1,9 +1,12 @@
 {
     "output_path" : "/use/local_settings.json/to/specify/path",
-    "n_query" : 50,
+    "n_query" : 20,
     "query" : {
-        "pt" : [""],
-        "en" : [""],
-        "es" : [""]
+        "pt" : ["impressora","instalar impressora", "cartucho impressora", "consertar impressora", 
+                "escáner","instalar escáner", "consertar escáner", "epson"],
+        "en" : ["printer","install printer", "printer cartridge", "fix printer", 
+            "scanner","install scanner", "fix scanner", "epson"],
+        "es" : ["impresora","instalar impresora", "cartucho impresora", "reparar impresora", 
+            "escáner","instalar escáner", "reparar escáner", "epson"]
     }
 }

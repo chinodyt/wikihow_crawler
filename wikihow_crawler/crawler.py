@@ -28,16 +28,22 @@ class Crawler :
             self.url = Crawler.url_lang['en']
     
     def search(self, query, resultset = [], n = 10) :
+        if not query.strip() :
+            return resultset
         query = query.replace(' ', '+')
         page = 0
         while n > 0 :
             rs = self.__request_query(query, page)
             for r in rs :
                 if r not in resultset :
-                    resultset.append(HowToPage(r))
-                    n -= 1
-                    if n <= 0 :
-                        break
+                    try :
+                        how_to = HowToPage(r)
+                        resultset.append(how_to)
+                        n -= 1
+                        if n <= 0 :
+                            break
+                    except :
+                        pass
             page += 1
         return resultset
 
@@ -67,7 +73,23 @@ class HowToPage :
 
         self.filename = name
         full_path = os.path.join(path, name)
-        pdfkit.from_url(self.url, full_path)
+        if not os.path.isfile(full_path) :
+            pdfkit.from_url(self.url, full_path)
+
+    
+    def __str__(self) :
+        ret = ''
+        if self.title :
+            ret += self.title
+        
+        if self.intro :
+            ret += '\n' + self.intro
+        
+        if self.steps :
+            for s in self.steps :
+                ret += '\n' + s   
+
+        return ret
 
     def __parse(self) :
         res = requests.get(self.url)
